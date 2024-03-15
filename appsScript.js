@@ -17,6 +17,7 @@ function exportGA4DataToSheets() {
       if (!data) {
         Logger.log(`No data returned for property ${property.sheetName}`);
         notify(`No data returned for property ${property.sheetName}`);
+        
         return;
       }
 
@@ -63,6 +64,7 @@ function fetchRealtimeData(propertyId) {
   if (jsonResponse.error) {
     Logger.log(`Error fetching data for property ${propertyId}: ${jsonResponse.error.message}`);
     notify(`Error fetching data for property ${propertyId}: ${jsonResponse.error.message}`);
+    
     return null;
   }
 
@@ -71,13 +73,16 @@ function fetchRealtimeData(propertyId) {
 
 function getCurrentDatetime() {
   const now = new Date();
+  
   return Utilities.formatDate(now, Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
 }
 
 function notify(str) {
-  if(!notifyFeatureEnabled){
+  if (!notifyFeatureEnabled) {
+
     return;
   }
+
   const url = `${NOTIF_URL_BASE}    ${encodeURIComponent(
     `[Google Sheets - Trodo | GA4 Exports]    ${str}`
   )}`;
@@ -127,5 +132,6 @@ function getOAuthToken() {
 
   const accessToken = JSON.parse(tokenResponse.getContentText()).access_token;
   Logger.log("OAuth token generated successfully."); // Log successful token generation
+  
   return accessToken;
 }
